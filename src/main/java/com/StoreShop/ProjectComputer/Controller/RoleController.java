@@ -34,9 +34,13 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.create(this.roleService.createRole(roleRequest), "Create role success"));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponse>> updateRole(@Valid @RequestBody RoleRequest roleRequest, @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.updateRole(roleRequest, id), "Update role success"));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<RoleResponse>> deleteRole(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.deleteRole(id), "Delete role success"));
+    }
 }

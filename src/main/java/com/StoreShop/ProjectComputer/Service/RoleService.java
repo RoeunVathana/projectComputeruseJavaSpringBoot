@@ -107,4 +107,14 @@ public class RoleService {
         // Convert Entity -> Response DTO
         return roleMapper.toResponse(savedRole);
     }
+
+    public RoleResponse deleteRole(Long id) {
+        RoleModel roleModel = this.roleRepository.findById(Math.toIntExact(id)).orElseThrow(
+                () -> new RuntimeException("Role Not Found with ID: " + id)
+        );
+
+        RoleResponse response = roleMapper.toResponse(roleModel);
+        roleRepository.delete(roleModel);
+        return response;
+    }
 }
