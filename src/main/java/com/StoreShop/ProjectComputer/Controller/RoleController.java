@@ -29,6 +29,11 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.getListRoles(), "Get Role Success"));
     }
 
+    @GetMapping("/search/{name}")
+    public ResponseEntity<ApiResponse<List<RoleResponse>>> filter(@PathVariable String name){
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.filterRole(name)));
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponse<RoleResponse>> addRole(@Valid @RequestBody RoleRequest roleRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.create(this.roleService.createRole(roleRequest), "Create role success"));

@@ -8,6 +8,7 @@ import com.StoreShop.ProjectComputer.Model.RoleModel;
 import com.StoreShop.ProjectComputer.Repository.PermissionRepository;
 import com.StoreShop.ProjectComputer.Repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -24,12 +25,18 @@ public class RoleService {
 
     // Get all roles
     public List<RoleResponse> getListRoles() {
-
-        return roleRepository.findAll()
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return roleRepository.findAll(sort)
                 .stream()
                 .map(roleMapper::toResponse)
                 .toList();
     }
+    //filter name
+    public List<RoleResponse> filterRole(String name) {
+        RoleModel roleModel = (RoleModel) this.roleRepository.findByName(name).orElseThrow(()->new RuntimeException("Role Not Found!"));
+        return null;
+    }
+
 
     // Create role
     public RoleResponse createRole(RoleRequest req) {
@@ -108,6 +115,7 @@ public class RoleService {
         return roleMapper.toResponse(savedRole);
     }
 
+    //delete role
     public RoleResponse deleteRole(Long id) {
         RoleModel roleModel = this.roleRepository.findById(Math.toIntExact(id)).orElseThrow(
                 () -> new RuntimeException("Role Not Found with ID: " + id)
