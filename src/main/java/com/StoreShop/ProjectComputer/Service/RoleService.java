@@ -7,13 +7,15 @@ import com.StoreShop.ProjectComputer.Model.PermissionModel;
 import com.StoreShop.ProjectComputer.Model.RoleModel;
 import com.StoreShop.ProjectComputer.Repository.PermissionRepository;
 import com.StoreShop.ProjectComputer.Repository.RoleRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +33,36 @@ public class RoleService {
                 .map(roleMapper::toResponse)
                 .toList();
     }
-    //filter name
+
+    //Get by id
+    public RoleResponse getById(Integer id) {
+        RoleModel roleModel = roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Role Not Found!"));
+        return roleMapper.toResponse(roleModel);
+    }
+
     public List<RoleResponse> filterRole(String name) {
-        RoleModel roleModel = (RoleModel) this.roleRepository.findByName(name).orElseThrow(()->new RuntimeException("Role Not Found!"));
-        return null;
+
+        Specification<RoleModel> spec = Specification.unrestricted();
+
+        if (name != null && !name.isBlank() && !name.equalsIgnoreCase("null")) {
+
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("name")),
+                            "%" + name.toLowerCase() + "%"
+                    )
+            );
+        } else {
+            throw new RuntimeException("Name is empty!");
+        }
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
+        List<RoleModel> roles = this.roleRepository.findAll(spec, sort);
+
+        return roles.stream()
+                .map(roleMapper::toResponse)
+                .toList();
     }
 
 
@@ -125,4 +153,5 @@ public class RoleService {
         roleRepository.delete(roleModel);
         return response;
     }
+
 }

@@ -5,12 +5,14 @@ import com.StoreShop.ProjectComputer.DTO.Role.RoleResponse;
 import com.StoreShop.ProjectComputer.Service.RoleService;
 import com.StoreShop.ProjectComputer.Util.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -29,10 +31,25 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.getListRoles(), "Get Role Success"));
     }
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<ApiResponse<List<RoleResponse>>> filter(@PathVariable String name){
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(this.roleService.filterRole(name)));
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<RoleResponse>> getRoleById(@PathVariable Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(roleService.getById(id), "Get Role Success"));
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<ApiResponse<List<RoleResponse>>> filter(
+            @RequestParam(required = false) String name
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.ok(
+                                roleService.filterRole(name),
+                                "Get Role Success"
+                        )
+                );
+    }
+
 
     @PostMapping
     public ResponseEntity<ApiResponse<RoleResponse>> addRole(@Valid @RequestBody RoleRequest roleRequest) {
