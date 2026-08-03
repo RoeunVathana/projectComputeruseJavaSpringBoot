@@ -1,6 +1,7 @@
 package com.StoreShop.ProjectComputer.Model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "permissionGroup")
+@Builder
 public class PermissionGroupModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
