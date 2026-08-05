@@ -35,7 +35,7 @@ public class PermissionModel {
         this.updatedAt = LocalDate.now();
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permissionGroupId")
     private PermissionGroupModel permissionGroup;
 }

@@ -1,5 +1,6 @@
 package com.StoreShop.ProjectComputer.Mapper;
 
+import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpRequest;
 import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpResponse;
 import com.StoreShop.ProjectComputer.Model.PermissionGroupModel;
 import com.StoreShop.ProjectComputer.Model.PermissionModel;
@@ -8,9 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PermissionGroupMapper {
 
-    public PermissionGroupModel entity(PermissionGroupModel dto){
+    public PermissionGroupModel toEntity(PermissionGpRequest dto){
         return PermissionGroupModel.builder()
-                .id(dto.getId())
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .build();

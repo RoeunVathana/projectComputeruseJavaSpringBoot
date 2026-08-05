@@ -1,8 +1,10 @@
 package com.StoreShop.ProjectComputer.Service;
 
+import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpRequest;
 import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpResponse;
 import com.StoreShop.ProjectComputer.Mapper.PermissionGroupMapper;
 import com.StoreShop.ProjectComputer.Model.PermissionGroupModel;
+import com.StoreShop.ProjectComputer.Model.PermissionModel;
 import com.StoreShop.ProjectComputer.Repository.PermissionGroupRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,17 @@ public class PermissionGroupService {
     public PermissionGpResponse getById(int id) {
         PermissionGroupModel permissionGroupModel = permissionGroupRepository.findById(id).orElseThrow(() -> new RuntimeException("Permission Not Found!"));
         return permissionGroupMapper.toResponse(permissionGroupModel);
+    }
+
+    public PermissionGpResponse createPermissionGp(PermissionGpRequest request) {
+
+        if(request.getName().isEmpty()){
+            throw new RuntimeException("Permission Name Empty!");
+        }
+
+        PermissionGroupModel permissionGroupModel = permissionGroupMapper.toEntity(request);
+
+        PermissionGroupModel save = permissionGroupRepository.save(permissionGroupModel);
+        return permissionGroupMapper.toResponse(save);
     }
 }
