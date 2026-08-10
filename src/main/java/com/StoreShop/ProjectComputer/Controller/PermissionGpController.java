@@ -1,16 +1,15 @@
 package com.StoreShop.ProjectComputer.Controller;
 
+import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpRequest;
 import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpResponse;
 import com.StoreShop.ProjectComputer.Mapper.PermissionGroupMapper;
 import com.StoreShop.ProjectComputer.Service.PermissionGroupService;
 import com.StoreShop.ProjectComputer.Util.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,12 +25,34 @@ public class PermissionGpController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<PermissionGpResponse>>> getPermissionGroups() {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(permissionGroupService.getList(),"Get permissionGroup Successfully"));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.ok(
+                                permissionGroupService.getList(),
+                                "Get permission groups successfully"
+                        )
+                );
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<ApiResponse<PermissionGpResponse>> getPermissionGroupById(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PermissionGpResponse>> getPermissionGroupById(@Valid @RequestParam Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(permissionGroupService.getById(Math.toIntExact(id))));
     }
 
+    @PostMapping
+    public ResponseEntity<ApiResponse<PermissionGpResponse>> createPermissionGroup(@Valid @RequestBody PermissionGpRequest permissionGpRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(permissionGroupService.createPermissionGp(permissionGpRequest),"Create Permission Group Successfully"));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PermissionGpResponse>> updatePermissionGroup(@Valid @RequestBody PermissionGpRequest permissionGpRequest, @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(permissionGroupService.updatePermissionGp(permissionGpRequest, Math.toIntExact(id)), "Update Permission Group Successfully"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<PermissionGpResponse>> deletePermissionGroup(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(permissionGroupService.deletePermissionGp(Math.toIntExact(id)), "Delete Permission Group Successfully"));
+    }
 }

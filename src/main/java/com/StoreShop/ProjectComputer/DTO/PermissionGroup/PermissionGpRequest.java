@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionGpRequest {
-    private String Name;
-    private String Description;
+    private String name;
+    private String description;
     private boolean active;
 }

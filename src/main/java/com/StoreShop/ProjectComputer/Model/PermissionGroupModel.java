@@ -1,9 +1,7 @@
 package com.StoreShop.ProjectComputer.Model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -12,6 +10,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "permissionGroup")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PermissionGroupModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,7 @@ public class PermissionGroupModel {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDate.now();
+        if(this.active == null) {}
     }
     @PreUpdate
     public void preUpdate() {
