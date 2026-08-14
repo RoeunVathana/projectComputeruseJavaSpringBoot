@@ -26,7 +26,9 @@ public class PermissionGroupModel {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDate.now();
-        if(this.active == null) {}
+        if(this.active == null) {
+            this.active = true;
+        }
     }
     @PreUpdate
     public void preUpdate() {
