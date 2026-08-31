@@ -5,8 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
+
+@Data
 @Entity
 @Table(name = "permissionGroup")
 @Builder
@@ -16,6 +16,7 @@ public class PermissionGroupModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private  String name;
     private  String description;
     private  Boolean active;
