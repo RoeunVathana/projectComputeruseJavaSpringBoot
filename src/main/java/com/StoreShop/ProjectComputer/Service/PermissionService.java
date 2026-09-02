@@ -86,4 +86,60 @@ public class PermissionService {
         // Convert entity -> response
         return permissionMapper.toResponse(savedPermission);
     }
+
+    // Update permission
+    public PermissionResponse update(PermissionRequest request, Long id) {
+
+        // Find existing permission
+        PermissionModel permissionModel = permissionRepository
+                .findById(Math.toIntExact(id))
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Permission not found with id: " + id
+                        )
+                );
+
+        // Find and set Permission Group if provided
+        if (request.getPermissionGroupId() != null) {
+            PermissionGroupModel permissionGroupModel =
+                    permissionGroupRepository
+                            .findById(Math.toIntExact(request.getPermissionGroupId()))
+                            .orElseThrow(() ->
+                                    new RuntimeException(
+                                            "Permission Group not found with id: "
+                                                    + request.getPermissionGroupId()
+                                    )
+                            );
+            permissionModel.setPermissionGroup(permissionGroupModel);
+        }
+
+        // Update fields
+        permissionModel.setName(request.getName());
+        permissionModel.setDescription(request.getDescription());
+        if (request.getActive() != null) {
+            permissionModel.setActive(request.getActive());
+        }
+
+        // Save updated permission
+        PermissionModel savedPermission = permissionRepository.save(permissionModel);
+
+        // Convert entity -> response
+        return permissionMapper.toResponse(savedPermission);
+    }
+
+    // Delete permission
+    public PermissionResponse delete(Long id) {
+
+        PermissionModel permissionModel = permissionRepository
+                .findById(Math.toIntExact(id))
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Permission not found with id: " + id
+                        )
+                );
+
+        PermissionResponse response = permissionMapper.toResponse(permissionModel);
+        permissionRepository.delete(permissionModel);
+        return response;
+    }
 }
