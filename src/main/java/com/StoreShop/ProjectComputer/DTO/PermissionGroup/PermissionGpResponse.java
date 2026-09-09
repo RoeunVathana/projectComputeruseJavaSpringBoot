@@ -7,12 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.SequencedCollection;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionGpResponse {
+public class PermissionGpResponse{
     private Long id;
     private String name;
     private String description;

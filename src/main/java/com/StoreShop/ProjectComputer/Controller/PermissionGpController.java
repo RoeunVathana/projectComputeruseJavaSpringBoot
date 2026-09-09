@@ -3,8 +3,10 @@ package com.StoreShop.ProjectComputer.Controller;
 import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpRequest;
 import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpResponse;
 import com.StoreShop.ProjectComputer.Mapper.PermissionGroupMapper;
+import com.StoreShop.ProjectComputer.Response.SuccessResponse;
 import com.StoreShop.ProjectComputer.Service.PermissionGroupService;
 import com.StoreShop.ProjectComputer.Util.ApiResponse;
+import com.StoreShop.ProjectComputer.Util.ApiResponseUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +39,10 @@ public class PermissionGpController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<PermissionGpResponse>> getPermissionGroupById(@Valid @RequestParam Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(permissionGroupService.getById(Math.toIntExact(id))));
+    public ResponseEntity<SuccessResponse<PermissionGpResponse>> getPermissionGroupById(@PathVariable int id) {
+        return ResponseEntity.ok(
+                ApiResponseUtil.success(HttpStatus.OK, permissionGroupService.getById(id))
+        );
     }
 
     @PostMapping
