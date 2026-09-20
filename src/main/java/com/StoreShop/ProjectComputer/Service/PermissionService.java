@@ -7,27 +7,29 @@ import com.StoreShop.ProjectComputer.Model.PermissionGroupModel;
 import com.StoreShop.ProjectComputer.Model.PermissionModel;
 import com.StoreShop.ProjectComputer.Repository.PermissionGroupRepository;
 import com.StoreShop.ProjectComputer.Repository.PermissionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PermissionService {
 
     private final PermissionRepository permissionRepository;
     private final PermissionMapper permissionMapper;
     private final PermissionGroupRepository permissionGroupRepository;
 
-    public PermissionService(
-            PermissionRepository permissionRepository,
-            PermissionMapper permissionMapper,
-            PermissionGroupRepository permissionGroupRepository
-    ) {
-        this.permissionRepository = permissionRepository;
-        this.permissionMapper = permissionMapper;
-        this.permissionGroupRepository = permissionGroupRepository;
-    }
+//    public PermissionService(
+//            PermissionRepository permissionRepository,
+//            PermissionMapper permissionMapper,
+//            PermissionGroupRepository permissionGroupRepository
+//    ) {
+//        this.permissionRepository = permissionRepository;
+//        this.permissionMapper = permissionMapper;
+//        this.permissionGroupRepository = permissionGroupRepository;
+//    }
 
     // Get all permissions
     public List<PermissionResponse> getList() {

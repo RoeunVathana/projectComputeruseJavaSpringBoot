@@ -31,7 +31,7 @@ public class PermissionModel {
 
     private LocalDate updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "permissionGroupId")
     private PermissionGroupModel permissionGroup;
 

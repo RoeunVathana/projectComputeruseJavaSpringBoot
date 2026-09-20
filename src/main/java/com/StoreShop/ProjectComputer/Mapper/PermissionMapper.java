@@ -21,8 +21,9 @@ public class PermissionMapper {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .active(dto.getActive())
-                .permissionGroupName(dto.getPermissionGroup().getName())
-                .permissionGroupId(dto.getPermissionGroup().getId())
+//                .permissionGroupName(dto.getPermissionGroup().getName())
+//                .permissionGroupId(dto.getPermissionGroup().getId())
+                .permissionGroup(dto.getPermissionGroup())
                 .build();
     }
 }

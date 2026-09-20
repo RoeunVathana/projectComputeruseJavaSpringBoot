@@ -15,10 +15,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PermissionResponse {
     private Long id;
-    private Long permissionGroupId;
+//    private Long permissionGroupId;
     private String name;
     private String description;
-    private String permissionGroupName;
+//    private String permissionGroupName;
     private Boolean active;
     private LocalDate createdAt;
     private LocalDate updatedAt;

@@ -5,6 +5,7 @@ import com.StoreShop.ProjectComputer.DTO.PermissionGroup.PermissionGpResponse;
 import com.StoreShop.ProjectComputer.Mapper.PermissionGroupMapper;
 import com.StoreShop.ProjectComputer.Model.PermissionGroupModel;
 import com.StoreShop.ProjectComputer.Repository.PermissionGroupRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PermissionGroupService {
     final PermissionGroupRepository permissionGroupRepository;
     final PermissionGroupMapper permissionGroupMapper;
 
-    public  PermissionGroupService(PermissionGroupRepository permissionGroupRepository, PermissionGroupMapper permissionGroupMapper) {
-        this.permissionGroupRepository = permissionGroupRepository;
-        this.permissionGroupMapper = permissionGroupMapper;
-    }
+//    public  PermissionGroupService(PermissionGroupRepository permissionGroupRepository, PermissionGroupMapper permissionGroupMapper) {
+//        this.permissionGroupRepository = permissionGroupRepository;
+//        this.permissionGroupMapper = permissionGroupMapper;
+//    }
 
 
     public List<PermissionGpResponse> getList() {

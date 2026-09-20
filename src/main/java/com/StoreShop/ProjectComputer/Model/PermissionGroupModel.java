@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -20,6 +21,9 @@ public class PermissionGroupModel {
     private  String name;
     private  String description;
     private  Boolean active;
+
+    @OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    private List<PermissionModel> permissions;
 
     private LocalDate createdAt;
     private LocalDate updatedAt;
